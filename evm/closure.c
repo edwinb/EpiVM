@@ -15,6 +15,8 @@ VMState* vm;
 
 extern func _do___U__main();
 
+void epicMemInfo();
+
 ALLOCATOR allocate;
 REALLOCATOR reallocate;
 pool_t** pools = NULL;
@@ -1174,11 +1176,22 @@ VMState* init_evm(int argc, char* argv[])
     return vm;
 }
 
+void wrap_GC_free(void * a, size_t b) {
+  GC_free(a);
+}
+
+void* wrap_GC_realloc(void *ptr, size_t old, size_t new) {
+  return GC_realloc(ptr, new);
+}
 void epic_main(int argc, char* argv[])
 {
     GC_init();
 
+
+
+
     vm = init_evm(argc, argv);
+    mp_set_memory_functions(GC_malloc_atomic, wrap_GC_realloc, wrap_GC_free);
 
 //    GC_use_entire_heap = 1;
 //    GC_free_space_divisor = 2;
@@ -1207,7 +1220,7 @@ void epic_main(int argc, char* argv[])
 	fprintf(stderr, "Warning: roots left %d\n", vm->roots-vm->start_roots);
     }
 */
-
+    epicMemInfo();
     close_evm(vm);
 }
 

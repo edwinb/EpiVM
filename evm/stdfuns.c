@@ -368,10 +368,7 @@ mpz_t* strToBigInt(char* str)
 char* bigIntToStr(mpz_t x)
 {
     char* str = mpz_get_str(NULL,10,x);
-    char* buf = EMALLOC(strlen(str)+1);
-    strcpy(buf,str);
-    free(str);
-    return buf;
+    return str;
 }
 
 VAL strToBig(char* str) {
