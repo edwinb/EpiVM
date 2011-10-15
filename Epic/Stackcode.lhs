@@ -1,7 +1,7 @@
 > module Epic.Stackcode where
 
 > import Control.Monad.State
-> import List
+> import Data.List
 
 > import Epic.Language
 > import Debug.Trace

@@ -45,7 +45,7 @@
 Combinators for constructing an expression
 
 > import Control.Monad.State
-> import System
+> import System.Process
 > import System.IO
 > import Debug.Trace
 
