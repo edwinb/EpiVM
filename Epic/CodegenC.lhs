@@ -1,3 +1,4 @@
+> {-#LANGUAGE FlexibleContexts#-}
 > module Epic.CodegenC where
 
 > import Control.Monad.State
@@ -98,10 +99,11 @@
 >       if (x>max) then put x else return ()
 
 >    cgs [] = return ""
+
 >    cgs (x:xs) = do xc <- cg x
 >                    xsc <- cgs xs
 >                    return $ xc ++ "\n" ++ xsc
-
+>    cg::  (MonadState Int m) => ByteOp -> m [Char]
 >    cg (CALL t fn args) = return $ tmp t ++ " = " ++ quickcall fn ++ 
 >                          targs "(" args ++ ");"
 >    cg (TAILCALL t fn args) 
