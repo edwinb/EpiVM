@@ -1,6 +1,7 @@
 > module Main where
 
 > import System.Exit
+> import System.FilePath
 > import System.Directory
 > import System.Environment
 > import System.IO
@@ -38,8 +39,8 @@
 > compileFiles [] _ = return []
 > compileFiles (fn:xs) opts
 >     | isDotE fn = do
->        let ofile = getRoot fn ++ ".o"
->        compileOpts fn ofile (Just (getRoot fn ++ ".ei")) opts
+>        let ofile = replaceExtension fn "o"
+>        compileOpts fn ofile (Just (replaceExtension fn "ei")) opts
 >        rest <- compileFiles xs opts
 >        return (ofile:rest)
 >     | isDotO fn = do
@@ -67,14 +68,11 @@
 >     (stem,".e") -> stem
 >     (stem,_) -> fn ++ ".exe"
 
-> getRoot fn = case span (/='.') fn of
->     (stem,_) -> stem
-
 > getInput :: [String] -> IO ([FilePath],[Option])
 > getInput args = do let opts = parseArgs args
 >                    processFlags opts False
 >                    fns <- getFile opts
->                    if (length fns == 0) 
+>                    if (length fns == 0)
 >                       then do showUsage
 >                               return (fns,opts)
 >                       else return (fns,opts)

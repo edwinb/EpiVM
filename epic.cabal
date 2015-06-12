@@ -43,5 +43,5 @@ Executable     epic
                        Epic.Language Epic.Lexer Epic.CodegenC Epic.CodegenStack
                        Epic.OTTLang Epic.Simplify Epic.Stackcode
                        Epic.Evaluator Paths_epic
-               Build-depends: base >=4 && <5, mtl, array, Cabal, directory, process
+               Build-depends: base >=4 && <5, mtl, array, Cabal, directory, process, filepath
                Extensions: BangPatterns
